@@ -1,3 +1,6 @@
+/* eslint-disable no-console */
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/extensions */
 const jwt = require('jsonwebtoken');
 const resData = require('../../helper/response');
 
@@ -39,11 +42,10 @@ const authorized = (req, res, next) => {
     id: payload.id,
     name: payload.name,
     pin: payload.pin,
-    
+
   };
 
   next();
 };
-
 
 module.exports = { authorized };
