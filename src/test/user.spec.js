@@ -2,6 +2,7 @@ require("dotenv").config();
 const AuthUseCase = require("../usecase/auth");
 const mockAtuh = require("./mock/auth");
 const bycrpt = require("bcrypt");
+const token = require('../../src/helper/generateToken')
 
 let mockAuthResult = {};
 let authUC = null;
@@ -9,21 +10,18 @@ let authUC = null;
 describe("Auth Test", () => {
   beforeEach(() => {
     mockAuthResult = {
-      register: jest.fn().mockReturnValue(mockAtuh.user),
       login: jest.fn().mockReturnValue(mockAtuh.user),
     };
 
-    authUC = new AuthUseCase(mockAuthResult, bycrpt);
+    const generateToken = jest.fn().mockReturnValue(`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
+    eyJpZCI6MiwibmFtZSI6ImN1c3RvbWVyIiwidXNlcm5hbWUiOiJjdXN0b21lciIsImVtYWlsIjoiY3VzdG9tZX
+    JuQG1haWwuY29tIiwiaXNfYWRtaW4iOmZhbHNlLCJpYXQiOjE2NjY1Njk0ODgsImV4cCI6MTY2NjU5MTA4OH0.
+    vtMW_4uev15R141j_MNIru9nbi1uLGu1swNtfm5-19M`)
+
+    authUC = new AuthUseCase(mockAuthResult, bycrpt, token);
   });
   describe("Register", () => {
-    test("should isSuccess = true statusCode 201, & data type Object", async () => {
-      let res = await authUC.register(mockAtuh.user);
-      expect(res.isSuccess).toBeTruthy();
-      expect(res.statusCode).toEqual(201);
-      expect(res.data).toHaveProperty("id");
-      expect(res.data).toHaveProperty("name");
-      expect(res.data).toHaveProperty("pin");
-    });
+  
   });
   describe("Login", () => {
     test("should isSuccess = true statusCode 200, & data type Object", async () => {

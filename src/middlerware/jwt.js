@@ -41,8 +41,6 @@ const authorized = (req, res, next) => {
   req.user = {
     id: payload.id,
     name: payload.name,
-    pin: payload.pin,
-
   };
 
   next();
