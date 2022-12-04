@@ -1,20 +1,42 @@
-const { Todo } = require('../models/todo');
+const { Todo } = require('../models');
 
 class TodoRepo {
   constructor() {
-    this.todoModel = Todo;
+    this.TodoModel = Todo;
   }
 
-  async getAllByUserId(userId) {
-    const todo = await this.todoModel.findAll({
+  async createTodo(data) {
+    const todo = await this.TodoModel.create(data);
+    return todo;
+  }
+
+  async getAllTodoByUserId(userId) {
+    const todo = await this.TodoModel.findAll({
       where: { userId },
     });
     return todo;
   }
 
-  async getByUserId(userId) {
-    const todo = await this.todoModel.findAll({
-      where: { userId },
+  async getAllUnfinishedTodByUserId(userId) {
+    const todo = await this.TodoModel.findAll({
+      where: {
+        userId,
+        finish: false,
+      },
+    });
+    return todo;
+  }
+
+  async updateTodo(data, id) {
+    const todo = await this.TodoModel.update(data, {
+      where: { id },
+    });
+    return todo;
+  }
+
+  async deleteTodo(id) {
+    const todo = await this.TodoModel.destroy({
+      where: { id },
     });
     return todo;
   }
