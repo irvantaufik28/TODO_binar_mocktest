@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 const express = require('express');
+const swaggerUi = require('swagger-ui-express');
 const serverError = require('./middlerware/serverError');
 const token = require('./helper/generateToken');
 
@@ -30,6 +31,13 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/v1', rootRouter);
+const swaggerDocument = require('./docs/docs.json');
+
 app.use(serverError);
+app.use(
+  '/docs',
+  swaggerUi.serveFiles(swaggerDocument),
+  swaggerUi.setup(swaggerDocument),
+);
 
 module.exports = app;
