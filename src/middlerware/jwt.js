@@ -1,16 +1,14 @@
 /* eslint-disable no-console */
-/* eslint-disable import/no-unresolved */
-/* eslint-disable import/extensions */
 const jwt = require('jsonwebtoken');
-const resData = require('../../helper/response');
+const resData = require('../helper/response');
 
 function getToken(authHeader) {
   let splitHeader;
 
   try {
     splitHeader = authHeader.split(' ');
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.log(err);
     return null;
   }
 
@@ -22,6 +20,11 @@ function getToken(authHeader) {
 }
 
 const authorized = (req, res, next) => {
+  /*
+  #swagger.security = [{
+    "bearerAuth": []
+  }]
+  */
   const { authorization } = req.headers;
 
   if (authorization !== undefined && typeof authorization !== 'string') {
@@ -31,10 +34,11 @@ const authorized = (req, res, next) => {
   let token = getToken(authorization);
 
   let payload;
+
   try {
-    payload = jwt.verify(token, process.env.JWT_KEY_SECRET);
-  } catch (error) {
-    console.log(error);
+    payload = jwt.verify(token, process.env.JWT_KEY_SECRET || 'secret');
+  } catch (err) {
+    console.log(err);
     return res.status(401).json(resData.failed('unauthorized'));
   }
 

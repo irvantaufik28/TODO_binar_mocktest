@@ -5,11 +5,11 @@ module.exports = {
     try {
       const todo = {
         title: req.body.title,
-        finish: false,
-        userId: req.user,
+        finished: false,
+        userId: req.user.id,
       };
 
-      const result = await req.todoUC.createTODO(todo);
+      const result = await req.todoUC.createTodo(todo);
 
       if (!result.isSuccess) {
         return res.status(result.statusCode).json(resData.failed(result.reason));
@@ -22,7 +22,7 @@ module.exports = {
   },
   getAllTodoByUserId: async (req, res, next) => {
     try {
-      const { userId } = req.user;
+      const userId = req.user.id;
 
       const result = await req.todoUC.getAllTodoByUserId(userId);
 
@@ -38,7 +38,7 @@ module.exports = {
 
   getAllUnfinishedTodByUserId: async (req, res, next) => {
     try {
-      const { userId } = req.user;
+      const userId = req.user.id;
 
       const result = await req.todoUC.getAllUnfinishedTodByUserId(userId);
 
@@ -54,7 +54,7 @@ module.exports = {
 
   getTodoById: async (req, res, next) => {
     try {
-      const { userId } = req.user;
+      const userId = req.user.id;
       const { id } = req.params;
 
       const result = await req.todoUC.getTodoById(userId, id);
@@ -72,7 +72,8 @@ module.exports = {
     try {
       const todo = {
         title: req.body.title,
-        finish: req.body.finish,
+        finished: req.body.finished,
+        userId: req.user.id,
       };
       const { id } = req.params;
       const result = await req.todoUC.updateTodo(todo, id);
@@ -88,9 +89,11 @@ module.exports = {
   },
   deleteTodo: async (req, res, next) => {
     try {
-      const { userid } = req.user;
-      const { id } = req.params;
-      const result = await req.todoUC.deleteTodoo(userid, id);
+      const data = {
+        userId: req.user.id,
+        id: req.params.id,
+      };
+      const result = await req.todoUC.deleteTodo(data);
 
       if (!result.isSuccess) {
         return res.status(result.statusCode).json(resData.failed(result.reason));

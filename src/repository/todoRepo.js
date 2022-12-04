@@ -21,7 +21,7 @@ class TodoRepo {
     const todo = await this.TodoModel.findAll({
       where: {
         userId,
-        finish: false,
+        finished: false,
       },
     });
     return todo;
