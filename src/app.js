@@ -7,14 +7,18 @@ const token = require('./helper/generateToken');
 const app = express();
 
 const AuthRepo = require('./repository/authRepo');
+const TodoRepo = require('./repository/todoRepo');
 const AuthUsecase = require('./usecase/auth');
+const TOddoUsecase = require('./usecase/todo');
 
 const rootRouter = require('./router/index');
 
 const authUC = new AuthUsecase(new AuthRepo(), token);
+const todoUC = new TOddoUsecase(new TodoRepo());
 
 app.use((req, res, next) => {
   req.authUC = authUC;
+  req.todoUC = todoUC;
   next();
 });
 
