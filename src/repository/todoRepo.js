@@ -27,6 +27,15 @@ class TodoRepo {
     return todo;
   }
 
+  async getTodoById(id) {
+    const todo = await this.TodoModel.findOne({
+      where: {
+        id,
+      },
+    });
+    return todo;
+  }
+
   async updateTodo(data, id) {
     const todo = await this.TodoModel.update(data, {
       where: { id },

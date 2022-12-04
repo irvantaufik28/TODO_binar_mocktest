@@ -11,7 +11,7 @@ function generateToken(data) {
     userData,
     process.env.JWT_KEY_SECRET,
     {
-      expiresIn: '6h',
+      expiresIn: process.env.JWT_TOKEN_AGE,
     },
   );
 
