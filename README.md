@@ -26,8 +26,15 @@ test each endpoint in swagger
 - login and get token  
 - add token in authorization (in accordance auth)
 - testing all endpoint
-
+### User Pin testing
+```
+1111
+```
+```
+1234
+```
 ### Demo
+
 ```
 https://irvantaufik.herokuapp.com/
 ```
