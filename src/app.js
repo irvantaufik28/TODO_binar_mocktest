@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const swaggerUi = require('swagger-ui-express');
+const cors = require('cors');
 const serverError = require('./middlerware/serverError');
 const token = require('./helper/generateToken');
 
@@ -23,6 +24,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
